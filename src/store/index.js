@@ -11,11 +11,12 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     user: null,
+    isLoggedIn: false,
   },
   mutations: {
     SET_USER(state, payload) {
       state.user = payload;
-      console.log(state.user);
+      payload ? (state.isLoggedIn = true) : (state.isLoggedIn = false);
     },
   },
   actions: {
@@ -62,7 +63,8 @@ export default new Vuex.Store({
     },
   },
   getters: {
-    isLoggedIn: (state) => (state.user ? true : false),
+    isLoggedIn: (state) => state.isLoggedIn,
+    getUser: (state) => state.user,
   },
   modules: {},
 });
