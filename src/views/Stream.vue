@@ -1,18 +1,16 @@
 <template>
-  <div class="home">
+  <div>
     <TheNavbar />
-    <h1>home</h1>
+    <h1>stream</h1>
   </div>
 </template>
-
 <script>
-// @ is an alias to /src
 import TheNavbar from "@/components/TheNavbar.vue";
-
 export default {
-  name: "Home",
+  name: "Stream",
   components: {
     TheNavbar,
   },
+  computed: {},
 };
 </script>

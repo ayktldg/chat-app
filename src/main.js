@@ -14,30 +14,15 @@ const firebaseConfig = {
   projectId: "chat-app-78874",
   storageBucket: "chat-app-78874.appspot.com",
   messagingSenderId: "277088526062",
-  appId: "1:277088526062:web:c09b662b773f9a09339dff"
+  appId: "1:277088526062:web:c09b662b773f9a09339dff",
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-//const db = firebase.firestore();
-
 Vue.config.productionTip = false;
 
-let app;
-
-firebase.auth().onAuthStateChanged(user => {
-  console.log("user", user);
-  if (!app) {
-    app = new Vue({
-      router,
-      store,
-      render: h => h(App)
-    }).$mount("#app");
-  }
-});
-
-// new Vue({
-//   router,
-//   store,
-//   render: h => h(App)
-// }).$mount("#app");
+new Vue({
+  router,
+  store,
+  render: (h) => h(App),
+}).$mount("#app");
