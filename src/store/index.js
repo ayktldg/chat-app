@@ -10,13 +10,18 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    user: null,
+    users: [],
+    currentUser: null,
     isLoggedIn: false,
   },
   mutations: {
     SET_USER(state, payload) {
-      state.user = payload;
+      state.currentUser = payload;
       payload ? (state.isLoggedIn = true) : (state.isLoggedIn = false);
+    },
+
+    SET_USERS(state, payload) {
+      state.users = payload
     },
   },
   actions: {
@@ -61,10 +66,25 @@ export default new Vuex.Store({
         }
       });
     },
+
+    SET_USERS({ commit, getters }) {
+      console.log(getters.getCurrentUser.uid)
+      firebase
+        .firestore()
+        .collection("users").where("id", "!=", `${getters.getCurrentUser.uid}`)
+        .onSnapshot((querySnapshot) => {
+          const users = [];
+          querySnapshot.forEach((doc) => {
+            users.push(doc.data());
+          });
+          commit("SET_USERS", users)
+        });
+    },
   },
   getters: {
     isLoggedIn: (state) => state.isLoggedIn,
-    getUser: (state) => state.user,
+    getCurrentUser: (state) => state.currentUser,
+    getUsers: (state) => state.users,
   },
   modules: {},
 });

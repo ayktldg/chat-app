@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-green-200">
+  <nav class="bg-green-100">
     <div
       class="container mx-auto flex justify-between items-center h-20 p-12 md:px-0"
     >
@@ -38,7 +38,7 @@ import { mapGetters } from "vuex";
 export default {
   name: "TheNavbar",
   computed: {
-    ...mapGetters({ isLoggedIn: "isLoggedIn", user: "getUser" }),
+    ...mapGetters({ isLoggedIn: "isLoggedIn", user: "getCurrentUser" }),
   },
   methods: {
     async login() {
