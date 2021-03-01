@@ -48,9 +48,6 @@ export default {
       await this.$store.dispatch("LOGOUT");
     },
   },
-  mounted() {
-    console.log("status:", this.isLoggedIn);
-  },
 };
 </script>
 

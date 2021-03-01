@@ -24,11 +24,21 @@ const routes = [
         next();
       }
     },
+    children: [
+      {
+        path: "/chat-room/:id",
+        name: "ChatRoom",
+        component: () =>
+          import(
+            /* webpackChunkName: "chat-room" */ "../components/ChatRoom.vue"
+          ),
+      },
+    ],
   },
   {
     path: "*",
     redirect: "/",
-  }
+  },
 ];
 
 const router = new VueRouter({
