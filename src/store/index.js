@@ -14,6 +14,7 @@ export default new Vuex.Store({
     currentUser: null,
     isLoggedIn: false,
     chatRoom: {},
+    messages: [],
   },
   mutations: {
     SET_USER(state, payload) {
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     },
     SET_CHATROOM(state, payload) {
       state.chatRoom = payload;
+    },
+    SET_MESSAGES(state, payload) {
+      state.messages = payload;
     },
   },
   actions: {
@@ -93,7 +97,6 @@ export default new Vuex.Store({
         .set({
           id: chatId,
           users: [payload.id, getters.getCurrentUser.uid],
-          messages: [],
         })
         .then(() => {
           console.log("Document successfully written!");
@@ -112,12 +115,40 @@ export default new Vuex.Store({
           `${getters.getCurrentUser.uid}${payload.id}`,
         ])
         .onSnapshot((querySnapshot) => {
-          var chat = {};
+          let chat = {};
           querySnapshot.forEach((doc) => {
             chat = doc.data();
           });
           commit("SET_CHATROOM", chat);
           router.push({ name: "ChatRoom", params: { id: `${chat.id}` } });
+        });
+    },
+
+    SEND_MESSAGE(context, payload) {
+      firebase
+        .firestore()
+        .collection("chatRooms")
+        .doc(payload.chat.id)
+        .collection("messages")
+        .add({
+          message: payload.message,
+          from: payload.from,
+          to: payload.to,
+        });
+    },
+
+    GET_MESSAGES({ commit }, payload) {
+      firebase
+        .firestore()
+        .collection("chatRooms")
+        .doc(payload)
+        .collection("messages")
+        .onSnapshot((querySnapshot) => {
+          var messages = [];
+          querySnapshot.forEach((doc) => {
+            messages.push(doc.data());
+          });
+          commit("SET_MESSAGES", messages);
         });
     },
   },
@@ -126,6 +157,7 @@ export default new Vuex.Store({
     getCurrentUser: (state) => state.currentUser,
     getUsers: (state) => state.users,
     getChatRoom: (state) => state.chatRoom,
+    getMessages: (state) => state.messages
   },
   modules: {},
 });

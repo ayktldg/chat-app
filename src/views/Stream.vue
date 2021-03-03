@@ -1,8 +1,8 @@
 <template>
   <div class="bg-blue-100">
     <TheNavbar />
-    <UserList />
-    <div>
+    <div class="flex">
+      <UserList />
       <router-view></router-view>
     </div>
   </div>
