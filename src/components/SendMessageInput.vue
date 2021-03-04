@@ -9,11 +9,10 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
 export default {
   name: "SendMessageInput",
   props: {
-    otherUser: {
+    currentUser: {
       type: Object,
       required: true
     }
@@ -27,18 +26,11 @@ export default {
     sendMessage() {
       this.$store.dispatch("SEND_MESSAGE", {
         message: this.message,
-        from: this.currentUser.uid,
-        to: this.otherUser.id,
+        sender: this.currentUser.uid,
         chat: this.$route.params,
       });  
       this.message = "";
     },
-  },
-  computed: {
-    ...mapGetters({
-      userList: "getUsers",
-      currentUser: "getCurrentUser",
-    }),
   },
 };
 </script>

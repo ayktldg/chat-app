@@ -1,53 +1,48 @@
 <template>
-  <ul class="message flex flex-col">
-    <li
-      v-for="(message, index) in messages"
-      :key="index"
-      :class="[message.from == currentUser.uid ? 'self-end' : 'self-start']"
-      class="w-3/5 bg-indigo-300 rounded-xl p-4 m-4"
-      
-    >
-      <h3 class="border-b-2 border-gray-600 mb-4 font-bold">{{ user.name }}</h3>
-      <p>{{ message.message }}</p>
-    </li>
-  </ul>
+  <div :class="messageLocation" class=" w-3/4 md:w-auto md:max-w-md my-2 mx-4">
+    <div :class="messageBg" class="rounded shadow-lg p-4">
+      <p class="text-gray-700 break-words">
+        {{ message.message }}
+      </p>
+    </div>
+    <div>
+      <p class="text-xs italic text-gray-500 mt-2 text-center">{{ messageTime }}</p>
+    </div>
+  </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
 export default {
   name: "MessageCard",
   props: {
-    otherUser: {
+    message: {
+      type: Object,
+      required: true,
+    },
+    currentUser: {
       type: Object,
       required: true,
     },
   },
   computed: {
-    ...mapGetters({
-      userList: "getUsers",
-      currentUser: "getCurrentUser",
-      messages: "getMessages",
-    }),
-    user() {
-      const currentUser = this.userList.find(
-        (element) => element.id === this.currentUser.uid
-      );
-      const whichUser = this.messages.forEach((element) => {
-        if (element.from === currentUser.id) {
-          return true;
-        } else {
-          return false;
-        }
-      });
-      if (whichUser) {
-        return currentUser;
+    messageLocation() {
+      if (this.message.sender == this.currentUser.uid) {
+        return "self-end";
       } else {
-        return this.otherUser;
+        return "self-start";
       }
     },
-  },
-  created() {
-    this.$store.dispatch("GET_MESSAGES", this.$route.params.id);
+    messageBg() {
+      if (this.message.sender == this.currentUser.uid) {
+        return "bg-red-400";
+      } else {
+        return "bg-indigo-300";
+      }
+    },
+    messageTime() {
+      const timeArr = this.message.time.toDate().toUTCString().split(" ");
+      const formattedTime = timeArr.slice(1, 5).join(" ");
+      return formattedTime;
+    },
   },
 };
 </script>

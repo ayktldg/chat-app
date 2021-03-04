@@ -1,10 +1,17 @@
 <template>
   <div class="w-4/6">
     <div class="overflow-y-auto h-96">
-      <MessageCard :otherUser="otherUser"/>
+      <div class="flex flex-col">
+        <MessageCard
+          v-for="(message, index) in messages"
+          :key="index"
+          :currentUser="currentUser"
+          :message="message"
+        />
+      </div>
     </div>
     <div>
-      <SendMessageInput :otherUser="otherUser"/>
+      <SendMessageInput :userList="userList" :currentUser="currentUser" />
     </div>
   </div>
 </template>
@@ -18,20 +25,15 @@ export default {
     MessageCard,
     SendMessageInput,
   },
-   computed: {
+  computed: {
     ...mapGetters({
-      userList: "getUsers",
       currentUser: "getCurrentUser",
-      chatInfo: "getChatRoom",
+      userList: "getUsers",
+      messages: "getMessages",
     }),
-    otherUser() {
-      const index = this.chatInfo.users.findIndex(
-        (id) => id != this.currentUser.uid
-      );
-      const otherUserId = this.chatInfo.users[index];
-      const user = this.userList.find((user) => user.id === otherUserId);
-      return user;
-    },
+  },
+  created() {
+    this.$store.dispatch("SET_MESSAGES", this.$route.params.id);
   },
 };
 </script>

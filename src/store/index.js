@@ -132,17 +132,18 @@ export default new Vuex.Store({
         .collection("messages")
         .add({
           message: payload.message,
-          from: payload.from,
-          to: payload.to,
+          sender: payload.sender,
+          time: firebase.firestore.Timestamp.fromDate(new Date()),
         });
     },
 
-    GET_MESSAGES({ commit }, payload) {
+    SET_MESSAGES({ commit }, payload) {
       firebase
         .firestore()
         .collection("chatRooms")
         .doc(payload)
         .collection("messages")
+        .orderBy("time")
         .onSnapshot((querySnapshot) => {
           var messages = [];
           querySnapshot.forEach((doc) => {
@@ -157,7 +158,7 @@ export default new Vuex.Store({
     getCurrentUser: (state) => state.currentUser,
     getUsers: (state) => state.users,
     getChatRoom: (state) => state.chatRoom,
-    getMessages: (state) => state.messages
+    getMessages: (state) => state.messages,
   },
   modules: {},
 });
