@@ -6,7 +6,7 @@
 <script>
 export default {
   created(){
-    this.$store.dispatch("CHECK_USER_STATUS")
+    this.$store.dispatch("USER_STATUS")
   }
 }
 </script>

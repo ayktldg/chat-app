@@ -2,17 +2,22 @@ import Vue from "vue";
 import Vuex from "vuex";
 import router from "../router";
 
+import VuexPersistence from 'vuex-persist'
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage
+})
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    users: [],
     currentUser: null,
     isLoggedIn: false,
+    users: [],
     chatRoom: {},
     messages: [],
   },
@@ -33,9 +38,47 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    LOGIN() {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithPopup(provider);
+    REGISTER({ dispatch }, payload) {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(payload.email, payload.password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          const setUser = {
+            id: user.uid,
+            name: payload.name,
+            email: user.email,
+            chats: [],
+          };
+          firebase
+            .firestore()
+            .collection("users")
+            .doc(setUser.id)
+            .set(setUser)
+            .then(() => {
+              dispatch("USER_STATUS");
+              router.push("/Stream");
+            });
+        })
+        .catch((error) => {
+          var errorMessage = error.message;
+          console.log(errorMessage);
+        });
+    },
+
+    LOGIN({ commit }, payload) {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(payload.email, payload.password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          commit("SET_CURRENT_USER", user);
+          router.push("/Stream");
+        })
+        .catch((error) => {
+          var errorMessage = error.message;
+          console.log(errorMessage);
+        });
     },
 
     LOGOUT() {
@@ -50,28 +93,9 @@ export default new Vuex.Store({
         });
     },
 
-    CHECK_USER_STATUS({ commit }) {
+    USER_STATUS({ commit }) {
       firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          const setUser = {
-            id: user.uid,
-            name: user.displayName,
-            email: user.email,
-            photoURL: user.photoURL,
-            chats: []
-          };
-          firebase
-            .firestore()
-            .collection("users")
-            .doc(setUser.id)
-            .set(setUser)
-            .then(() => {
-              commit("SET_CURRENT_USER", user);
-              router.push("/Stream");
-            });
-        } else {
-          commit("SET_CURRENT_USER", user);
-        }
+        commit("SET_CURRENT_USER", user);      
       });
     },
 
@@ -107,6 +131,7 @@ export default new Vuex.Store({
           console.error("Error writing document: ", error);
         });
     },
+
     ADD_CHAT_INFO_TO_USER({ getters }, payload) {
       const chatId = `${payload.id}${getters.getCurrentUser.uid}`;
       firebase
@@ -144,19 +169,6 @@ export default new Vuex.Store({
         });
     },
 
-    SEND_MESSAGE(context, payload) {
-      firebase
-        .firestore()
-        .collection("chatRooms")
-        .doc(payload.chat.id)
-        .collection("messages")
-        .add({
-          message: payload.message,
-          sender: payload.sender,
-          time: firebase.firestore.Timestamp.fromDate(new Date()),
-        });
-    },
-
     SET_MESSAGES({ commit }, payload) {
       firebase
         .firestore()
@@ -172,6 +184,21 @@ export default new Vuex.Store({
           commit("SET_MESSAGES", messages);
         });
     },
+
+    SEND_MESSAGE(context, payload) {
+      firebase
+        .firestore()
+        .collection("chatRooms")
+        .doc(payload.chat.id)
+        .collection("messages")
+        .add({
+          message: payload.message,
+          sender: payload.sender,
+          time: firebase.firestore.Timestamp.fromDate(new Date()),
+        });
+    },
+
+    
   },
   getters: {
     isLoggedIn: (state) => state.isLoggedIn,
@@ -181,4 +208,5 @@ export default new Vuex.Store({
     getMessages: (state) => state.messages,
   },
   modules: {},
+  plugins: [vuexLocal.plugin]
 });

@@ -39,6 +39,8 @@ export default {
       }
     },
     messageTime() {
+      // const timeArr = this.message.time.toDate().toUTCString().split(" ");
+      // const formattedTime = timeArr.slice(1, 5).join(" ");
       const timeArr = this.message.time.toDate().toUTCString().split(" ");
       const formattedTime = timeArr.slice(1, 5).join(" ");
       return formattedTime;
