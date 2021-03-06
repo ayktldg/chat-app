@@ -14,8 +14,8 @@ export default {
   props: {
     currentUser: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -28,7 +28,7 @@ export default {
         message: this.message,
         sender: this.currentUser.uid,
         chat: this.$route.params,
-      });  
+      });
       this.message = "";
     },
   },

@@ -17,7 +17,7 @@ export default new Vuex.Store({
     messages: [],
   },
   mutations: {
-    SET_USER(state, payload) {
+    SET_CURRENT_USER(state, payload) {
       state.currentUser = payload;
       payload ? (state.isLoggedIn = true) : (state.isLoggedIn = false);
     },
@@ -58,7 +58,7 @@ export default new Vuex.Store({
             name: user.displayName,
             email: user.email,
             photoURL: user.photoURL,
-            chats: [],
+            chats: []
           };
           firebase
             .firestore()
@@ -66,11 +66,11 @@ export default new Vuex.Store({
             .doc(setUser.id)
             .set(setUser)
             .then(() => {
-              commit("SET_USER", user);
+              commit("SET_CURRENT_USER", user);
               router.push("/Stream");
             });
         } else {
-          commit("SET_USER", user);
+          commit("SET_CURRENT_USER", user);
         }
       });
     },
@@ -88,7 +88,7 @@ export default new Vuex.Store({
         });
     },
 
-    CREATE_CHATROOM({ getters }, payload) {
+    CREATE_CHATROOM({ getters, dispatch }, payload) {
       const chatId = `${payload.id}${getters.getCurrentUser.uid}`;
       firebase
         .firestore()
@@ -100,13 +100,32 @@ export default new Vuex.Store({
         })
         .then(() => {
           console.log("Document successfully written!");
+          dispatch("ADD_CHAT_INFO_TO_USER", payload);
+          router.push({ name: "ChatRoom", params: { id: `${chatId}` } });
         })
         .catch((error) => {
           console.error("Error writing document: ", error);
         });
     },
+    ADD_CHAT_INFO_TO_USER({ getters }, payload) {
+      const chatId = `${payload.id}${getters.getCurrentUser.uid}`;
+      firebase
+        .firestore()
+        .collection("users")
+        .doc(`${getters.getCurrentUser.uid}`)
+        .update({
+          chats: firebase.firestore.FieldValue.arrayUnion(`${chatId}`),
+        });
+      firebase
+        .firestore()
+        .collection("users")
+        .doc(`${payload.id}`)
+        .update({
+          chats: firebase.firestore.FieldValue.arrayUnion(`${chatId}`),
+        });
+    },
 
-    OPEN_CHAT({ getters, commit }, payload) {
+    OPEN_CHAT({ getters, commit, dispatch }, payload) {
       firebase
         .firestore()
         .collection("chatRooms")
@@ -120,6 +139,7 @@ export default new Vuex.Store({
             chat = doc.data();
           });
           commit("SET_CHATROOM", chat);
+          dispatch("SET_MESSAGES", chat.id);
           router.push({ name: "ChatRoom", params: { id: `${chat.id}` } });
         });
     },
@@ -157,7 +177,7 @@ export default new Vuex.Store({
     isLoggedIn: (state) => state.isLoggedIn,
     getCurrentUser: (state) => state.currentUser,
     getUsers: (state) => state.users,
-    getChatRoom: (state) => state.chatRoom,
+    getChatInfo: (state) => state.chatRoom,
     getMessages: (state) => state.messages,
   },
   modules: {},
