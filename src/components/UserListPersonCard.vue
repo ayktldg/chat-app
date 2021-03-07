@@ -1,21 +1,26 @@
 <template>
   <div class="w-full pl-4 pr-4 mb-4 flex" v-show="user.id !== currentUser.id">
-    <!-- <div class="w-1/6 p-2">
-      <img
-        :src="user.photoURL"
-        alt="image"
-        class="rounded-full w-full h-full"
-      />
-    </div> -->
-    <div class="border-b-2 border-black w-5/6">
+    <div class="w-1/6 p-2">
+      <div class="mr-4 rounded-full w-10 h-10 pl-3 pt-2 bg-blue-900">
+        <span class="text-white font-bold text-xl leading-none">{{
+          user.name.charAt(0)
+        }}</span>
+      </div>
+    </div>
+    <div class="border-b-2 border-black w-4/6">
       <p @click="openChat">
         <b>{{ user.name }}</b>
       </p>
       <p>{{ user.email }}</p>
     </div>
-    <button @click="setChat"  :class="isChatCreated ? 'bg-red-300' : 'bg-blue-300'">
-      {{ isChatCreated ? "Delete Chat" : "Create Chat" }}
-    </button>
+    <div class="w-1/6">
+      <button
+        @click="setChat"
+        :class="isChatCreated ? 'bg-red-300' : 'bg-blue-300'"
+      >
+        {{ isChatCreated ? "Delete Chat" : "Create Chat" }}
+      </button>
+    </div>
   </div>
 </template>
 <script>
@@ -56,6 +61,5 @@ export default {
       }
     },
   },
-
 };
 </script>

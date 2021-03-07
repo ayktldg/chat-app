@@ -50,13 +50,15 @@ export default {
     };
   },
   methods: {
-     login() {
+    login() {
       this.$store.dispatch("LOGIN", this.user);
-      //this.$router.push("/stream");
+      this.clearForm()
+    },
+    clearForm() {
       this.user = {
         email: "",
         password: "",
-      }
+      };
     },
   },
 };

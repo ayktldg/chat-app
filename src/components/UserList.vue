@@ -19,11 +19,8 @@ export default {
   computed: {
     ...mapGetters({
       userList: "getUsers",
-      getCurrentUser: "getCurrentUser",
+      currentUser: "getCurrentUser",
     }),
-    currentUser(){
-      return this.userList.find(user => user.id === this.getCurrentUser.uid)
-    }
   },
   created() {
     this.$store.dispatch("SET_USERS");

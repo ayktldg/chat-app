@@ -1,7 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import store from "../store";
+//import store from "../store";
+import firebase from "firebase/app";
+import "firebase/auth";
+
 
 Vue.use(VueRouter);
 
@@ -22,14 +25,17 @@ const routes = [
     name: "Stream",
     component: () =>
       import(/* webpackChunkName: "stream" */ "../views/Stream.vue"),
-    beforeEnter: (to, from, next) => {
-      const isLoggedIn = store.getters.isLoggedIn;
-      if (!isLoggedIn) {
-        next("/");
-      } else {
-        next();
-      }
-    },
+      meta: {
+        requiresAuth: true
+      },
+    // beforeEnter: (to, from, next) => {
+    //   const isLoggedIn = store.state.isLoggedIn;
+    //   if (!isLoggedIn) {
+    //     next("/");
+    //   } else {
+    //     next();
+    //   }
+    // },
     children: [
       {
         path: "/chat-room/:id",
@@ -52,5 +58,14 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  const currentUser = firebase.auth().currentUser
+
+  if (requiresAuth && !currentUser) next({ path: '/', query: { redirect: to.fullPath } })
+
+  else next()
+})
 
 export default router;

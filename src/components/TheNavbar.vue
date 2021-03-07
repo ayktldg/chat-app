@@ -6,7 +6,7 @@
       <div class="logo">
         <router-link to="/" class="text-3xl font-bold"> ChatApp </router-link>
       </div>
-      <div v-if="!isLoggedIn">
+      <div v-if="!currentUser.id">
         <router-link
           tag="button"
           to="/register"
@@ -16,9 +16,11 @@
         </router-link>
       </div>
       <div v-else class="flex">
-        <!-- <div class="mr-4 rounded-full w-10 h-10">
-          <img :src="user.photoURL" alt="image" class="rounded-full w-full h-full" />
-        </div> -->
+        <div class="mr-4 rounded-full w-10 h-10 pl-3 pt-2 bg-blue-900">
+          <span class="text-white font-bold text-xl leading-none">{{
+            currentUser.name.charAt(0)
+          }}</span>
+        </div>
         <div class="hidden md:block md:mr-4">
           <p class="leading-4">
             <b>{{ currentUser.name }}</b>
@@ -44,23 +46,15 @@ export default {
   name: "TheNavbar",
   computed: {
     ...mapGetters({
-      isLoggedIn: "isLoggedIn",
-      getCurrentUser: "getCurrentUser",
+      currentUser: "getCurrentUser",
       userList: "getUsers",
     }),
-    currentUser(){
-      return this.userList.find(user => user.id === this.getCurrentUser.uid)
-    }
-    },
+  },
   methods: {
     logout() {
       this.$store.dispatch("LOGOUT");
-      this.$router.push("/");
     },
   },
-  created(){
-    console.log(this.users)
-  }
 };
 </script>
 

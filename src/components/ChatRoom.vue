@@ -30,7 +30,7 @@ export default {
       currentUser: "getCurrentUser",
       userList: "getUsers",
       messages: "getMessages",
-    })
+    }),
   },
   created() {
     this.$store.dispatch("SET_MESSAGES", this.$route.params.id);

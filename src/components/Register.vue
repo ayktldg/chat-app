@@ -6,7 +6,7 @@
         Register for contact people
       </h2>
       <form @submit.prevent="register" class="mb-20 md:mb-16">
-          <div class="name my-5">
+        <div class="name my-5">
           <label for="name" class="block">Username</label>
           <input
             type="text"
@@ -65,9 +65,8 @@ export default {
     };
   },
   methods: {
-     register() {
+    register() {
       this.$store.dispatch("REGISTER", this.user);
-      //this.$router.push("/stream");
     },
   },
 };

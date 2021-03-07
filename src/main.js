@@ -16,14 +16,17 @@ const firebaseConfig = {
   messagingSenderId: "277088526062",
   appId: "1:277088526062:web:c09b662b773f9a09339dff",
 };
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-Vue.config.productionTip = false;
-new Vue({
-  router,
-  store,
-  render: (h) => h(App),
-}).$mount("#app");
-
-
+let app;
+firebase.auth().onAuthStateChanged(() => {
+  if (!app) {
+    app = new Vue({
+      store,
+      router,
+      render: (h) => h(App),
+    }).$mount("#app");
+  }
+});

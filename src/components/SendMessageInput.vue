@@ -26,7 +26,7 @@ export default {
     sendMessage() {
       this.$store.dispatch("SEND_MESSAGE", {
         message: this.message,
-        sender: this.currentUser.uid,
+        sender: this.currentUser.id,
         chat: this.$route.params,
       });
       this.message = "";
