@@ -8,6 +8,20 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 
+import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-validate';
+import en from 'vee-validate/dist/locale/en.json';
+import * as rules from 'vee-validate/dist/rules';
+
+Object.keys(rules).forEach(rule => {
+  extend(rule, rules[rule]);
+});
+
+localize('en', en);
+
+// Install components globally
+Vue.component('ValidationObserver', ValidationObserver);
+Vue.component('ValidationProvider', ValidationProvider);
+
 const firebaseConfig = {
   apiKey: "AIzaSyBsSNibaYDFeGGBog7eyDWCipyIychKzh8",
   authDomain: "chat-app-78874.firebaseapp.com",

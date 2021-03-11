@@ -6,7 +6,7 @@
       <h2 class="pl-4 text-xl font-bold py-4 text-gray-200">
         {{ otherUser.name }}
       </h2>
-      <router-link to="/stream" class="md:hidden">
+      <router-link to="/stream" class="sm:hidden">
         <i class="fas fa-arrow-left text-2xl text-gray-200 mr-8"
           ><span class="ml-2">back</span></i
         >

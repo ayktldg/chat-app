@@ -1,5 +1,5 @@
 <template>
-  <div class="list w-full md:w-2/6 overflow-y-auto bg-gray-700 py-4 text-gray-300">
+  <div class="list md:w-2/6 overflow-y-auto bg-gray-700 py-4 text-gray-300">
   <h2 class="pl-7 text-xl font-bold pb-4 border-b-2 border-gray-400">Users</h2>
     <UserListPersonCard
       v-for="user in userList"
