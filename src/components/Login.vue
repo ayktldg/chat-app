@@ -1,37 +1,37 @@
 <template>
-  <div class="login w-96">
-    <h2 class="font-bold text-2xl">Login for messaging</h2>
+  <div class="login text-gray-900">
+    <h2 class="font-bold text-2xl">Login for talking.</h2>
     <form @submit.prevent="login">
       <div class="email my-5">
-        <label for="email" class="block">Email</label>
+        <label for="email" class="block text-lg font-semibold">Email</label>
         <input
           type="email"
           name="email"
           id="email"
-          class="inline-block rounded-md w-full p-1 mt-2 border"
+          class="inline-block rounded-2xl w-full py-1 px-3 mt-2 focus:outline-none focus:shadow-lg"
           v-model="user.email"
         />
       </div>
       <div class="password my-5">
-        <label for="password" class="block">Password</label>
+        <label for="password" class="block text-lg font-semibold">Password</label>
         <input
           type="password"
           name="password"
           id="password"
-          class="inline-block rounded-md w-full p-1 mt-2 border"
+          class="inline-block rounded-2xl w-full py-1 px-3 mt-2 focus:outline-none focus:shadow-lg"
           v-model="user.password"
         />
       </div>
 
       <button
         type="submit"
-        class="bg-green-200 py-2 w-2/5 border rounded-md my-5"
+        class="bg-transparent border-2 text-lg font-semibold border-gray-100 w-2/5 justify-end my-5 text-white py-2 rounded-3xl hover:bg-gray-600 focus:outline-none"
       >
         Login
       </button>
     </form>
     <div>
-      <router-link to="/register" class="text-dark">
+      <router-link to="/register" class="text-gray-900 hover:text-black">
         Not an User?
         <strong>Create account</strong>
       </router-link>

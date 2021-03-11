@@ -16,6 +16,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     currentUser: {},
+    otherUser: {},
     users: [],
     chatRoom: {},
     messages: [],
@@ -23,6 +24,9 @@ export default new Vuex.Store({
   mutations: {
     SET_CURRENT_USER(state, payload) {
       state.currentUser = payload;
+    },
+    SET_OTHER_USER(state, payload) {
+      state.otherUser = payload;
     },
     SET_USERS(state, payload) {
       state.users = payload;
@@ -115,7 +119,7 @@ export default new Vuex.Store({
         });
     },
 
-    CREATE_CHATROOM({ getters, dispatch }, payload) {
+    CREATE_CHATROOM({ commit,getters, dispatch }, payload) {
       const chatId = `${payload.id}${getters.getCurrentUser.id}`;
       firebase
         .firestore()
@@ -126,9 +130,9 @@ export default new Vuex.Store({
           users: [payload.id, getters.getCurrentUser.id],
         })
         .then(() => {
-          console.log("Document successfully written!");
           dispatch("ADD_CHAT_INFO_TO_USER", { user: payload, chatId: chatId });
           router.push({ name: "ChatRoom", params: { id: `${chatId}` } });
+          commit("SET_OTHER_USER", payload)
         })
         .catch((error) => {
           console.error("Error writing document: ", error);
@@ -166,9 +170,11 @@ export default new Vuex.Store({
             chat = doc.data();
           });
           commit("SET_CHATROOM", chat);
+          commit("SET_OTHER_USER", payload)
           dispatch("SET_MESSAGES", chat.id);
           router.push({ name: "ChatRoom", params: { id: `${chat.id}` } });
         });
+      ;
     },
 
     SET_MESSAGES({ commit }, payload) {
@@ -202,6 +208,7 @@ export default new Vuex.Store({
   },
   getters: {
     getCurrentUser: (state) => state.currentUser,
+    getOtherUser: (state) => state.otherUser,
     getUsers: (state) => state.users,
     getChatInfo: (state) => state.chatRoom,
     getMessages: (state) => state.messages,

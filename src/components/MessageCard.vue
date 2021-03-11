@@ -1,12 +1,12 @@
 <template>
   <div :class="messageLocation" class="w-3/4 md:w-auto md:max-w-md my-2 mx-4">
-    <div :class="messageBg" class="rounded shadow-lg p-4">
-      <p class="text-gray-700 break-words">
+    <div :class="messageBg" class=" rounded-3xl shadow-lg px-4 py-2">
+      <p class="text-gray-200 break-words">
         {{ message.message }}
       </p>
     </div>
     <div>
-      <p class="text-xs italic text-gray-500 mt-2 text-center">
+      <p class="text-xs italic text-gray-200 mt-2 text-center">
         {{ messageTime }}
       </p>
     </div>
@@ -35,9 +35,9 @@ export default {
     },
     messageBg() {
       if (this.message.sender == this.currentUser.id) {
-        return "bg-red-400";
+        return "bg-red-900";
       } else {
-        return "bg-indigo-300";
+        return "bg-indigo-900";
       }
     },
     messageTime() {

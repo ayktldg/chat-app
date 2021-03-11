@@ -1,27 +1,26 @@
 <template>
-  <nav class="bg-green-100">
+  <nav class="bg-gray-800">
     <div
-      class="container mx-auto flex justify-between items-center h-20 p-12 md:px-0"
+      class="container mx-auto flex justify-between items-center p-8 md:px-0"
     >
       <div class="logo">
-        <router-link to="/" class="text-3xl font-bold"> ChatApp </router-link>
+        <router-link to="/stream" class="text-3xl font-bold hover:opacity-80 text-gray-200"> ChatApp </router-link>
       </div>
       <div v-if="!currentUser.id">
         <router-link
-          tag="button"
           to="/register"
-          class="bg-gray-500 text-white py-2 px-5 rounded-md hover:bg-gray-600"
+          class=" bg-transparent text-lg font-semibold border-2 border-gray-100 text-white py-2 px-5 rounded-3xl hover:opacity-80"
         >
           Register
         </router-link>
       </div>
       <div v-else class="flex">
-        <div class="mr-4 rounded-full w-10 h-10 pl-3 pt-2 bg-blue-900">
-          <span class="text-white font-bold text-xl leading-none">{{
+        <div class="mr-4 rounded-full w-10 h-10 bg-gray-200 flex justify-center items-center">
+          <span class="text-gray-800 font-semibold text-3xl leading-none">{{
             currentUser.name.charAt(0)
           }}</span>
         </div>
-        <div class="hidden md:block md:mr-4">
+        <div class="hidden md:block md:mr-4 text-gray-200">
           <p class="leading-4">
             <b>{{ currentUser.name }}</b>
           </p>
@@ -31,7 +30,7 @@
         </div>
         <button
           @click="logout"
-          class="bg-gray-500 text-white py-2 px-5 rounded-md hover:bg-gray-600"
+           class=" bg-transparent border-2 text-lg font-semibold border-gray-100 text-white py-2 px-5 rounded-3xl hover:opacity-80 focus:outline-none leading-none"
         >
           Logout
         </button>

@@ -5,7 +5,6 @@ import Home from "../views/Home.vue";
 import firebase from "firebase/app";
 import "firebase/auth";
 
-
 Vue.use(VueRouter);
 
 const routes = [
@@ -18,24 +17,16 @@ const routes = [
     path: "/register",
     name: "Register",
     component: () =>
-    import(/* webpackChunkName: "register" */ "../components/Register.vue"),
+      import(/* webpackChunkName: "register" */ "../components/Register.vue"),
   },
   {
     path: "/stream",
     name: "Stream",
     component: () =>
       import(/* webpackChunkName: "stream" */ "../views/Stream.vue"),
-      meta: {
-        requiresAuth: true
-      },
-    // beforeEnter: (to, from, next) => {
-    //   const isLoggedIn = store.state.isLoggedIn;
-    //   if (!isLoggedIn) {
-    //     next("/");
-    //   } else {
-    //     next();
-    //   }
-    // },
+    meta: {
+      requiresAuth: true,
+    },
     children: [
       {
         path: "/chat-room/:id",
@@ -60,12 +51,12 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-  const currentUser = firebase.auth().currentUser
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  const currentUser = firebase.auth().currentUser;
 
-  if (requiresAuth && !currentUser) next({ path: '/', query: { redirect: to.fullPath } })
-
-  else next()
-})
+  if (requiresAuth && !currentUser)
+    next({ path: "/", query: { redirect: to.fullPath } });
+  else next();
+});
 
 export default router;
