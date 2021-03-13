@@ -17,7 +17,7 @@ export default {
 };
 </script>
 <style scoped>
-.stream{
-  height: 28.3em;
+.stream {
+  height: 35em;
 }
 </style>

@@ -119,7 +119,7 @@ export default new Vuex.Store({
         });
     },
 
-    CREATE_CHATROOM({ commit,getters, dispatch }, payload) {
+    CREATE_CHATROOM({ commit, getters, dispatch }, payload) {
       const chatId = `${payload.id}${getters.getCurrentUser.id}`;
       firebase
         .firestore()
@@ -132,7 +132,7 @@ export default new Vuex.Store({
         .then(() => {
           dispatch("ADD_CHAT_INFO_TO_USER", { user: payload, chatId: chatId });
           router.push({ name: "ChatRoom", params: { id: `${chatId}` } });
-          commit("SET_OTHER_USER", payload)
+          commit("SET_OTHER_USER", payload);
         })
         .catch((error) => {
           console.error("Error writing document: ", error);
@@ -170,11 +170,10 @@ export default new Vuex.Store({
             chat = doc.data();
           });
           commit("SET_CHATROOM", chat);
-          commit("SET_OTHER_USER", payload)
+          commit("SET_OTHER_USER", payload);
           dispatch("SET_MESSAGES", chat.id);
           router.push({ name: "ChatRoom", params: { id: `${chat.id}` } });
         });
-      ;
     },
 
     SET_MESSAGES({ commit }, payload) {

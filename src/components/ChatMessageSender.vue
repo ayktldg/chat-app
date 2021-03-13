@@ -1,18 +1,21 @@
 <template>
-  <div class="border-t-2 border-gray-300 p-6 flex items-center">
+  <div class="border-t-2 border-gray-300 py-3 px-4 md:p-6 flex items-center">
     <input
       type="textarea"
-      class="py-2 px-4 w-full rounded-3xl focus:placeholder-gray-400 focus:outline-none focus:shadow-lg"
+      class="py-2 px-4 w-full rounded-3xl bg-gray-200 focus:placeholder-gray-400 focus:outline-none focus:shadow-lg"
       v-model="message"
       @keyup.enter="sendMessage"
       placeholder="Message..."
     />
-    <i class="far fa-paper-plane hover:opacity-80 text-2xl text-gray-200 cursor-pointer  mx-2" @click="sendMessage"></i>
+    <i
+      class="far fa-paper-plane hover:opacity-80 text-2xl text-gray-200 cursor-pointer mx-2"
+      @click="sendMessage"
+    ></i>
   </div>
 </template>
 <script>
 export default {
-  name: "SendMessageInput",
+  name: "ChatMessageSender",
   props: {
     currentUser: {
       type: Object,

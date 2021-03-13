@@ -1,5 +1,5 @@
 <template>
-  <div :class="messageLocation" class="w-3/4 md:w-auto md:max-w-md my-2 mx-4">
+  <div :class="messageLocation" class="w-3/5 md:w-auto md:max-w-md my-2 mx-4">
     <div :class="messageBg" class="rounded-3xl shadow-lg px-4 py-2">
       <p class="text-gray-200 break-words">
         {{ message.message }}
@@ -14,7 +14,7 @@
 </template>
 <script>
 export default {
-  name: "MessageCard",
+  name: "ChatMessageCard",
   props: {
     message: {
       type: Object,
@@ -42,7 +42,7 @@ export default {
     },
     messageTime() {
       const timeInMilis = this.message.time.seconds * 1000;
-      const timeArr = new Date(timeInMilis).toUTCString().split(" ");
+      const timeArr = new Date(timeInMilis).toString().split(" ");
       const formattedTime = timeArr.slice(1, 5).join(" ");
       return formattedTime;
     },

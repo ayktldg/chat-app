@@ -12,14 +12,13 @@ export default {
   name: "App",
   components: {
     TheNavbar,
-    TheFooter
+    TheFooter,
   },
-  created(){
-    this.$store.dispatch("USER_STATUS")
-  }
-}
+  created() {
+    this.$store.dispatch("USER_STATUS");
+  },
+};
 </script>
 
 <style>
-
 </style>

@@ -1,19 +1,16 @@
 <template>
   <div
-    class="md:w-4/6 bg-gradient-to-r from-gray-500 via-gray-600 to-gray-800 flex flex-col justify-between"
+    class="w-4/6 bg-gradient-to-r from-gray-500 via-gray-600 to-gray-800 flex flex-col justify-between"
   >
-    <div class="flex border-b-2 border-gray-400 justify-between items-center">
-      <h2 class="pl-4 text-xl font-bold py-4 text-gray-200">
+    <div
+      class="flex border-b-2 text-gray-200 border-gray-400 justify-between items-center"
+    >
+      <h2 class="pl-4 text-xl font-bold py-4">
         {{ otherUser.name }}
       </h2>
-      <router-link to="/stream" class="sm:hidden">
-        <i class="fas fa-arrow-left text-2xl text-gray-200 mr-8"
-          ><span class="ml-2">back</span></i
-        >
-      </router-link>
     </div>
     <div v-if="messages.length > 0" class="flex flex-col overflow-y-auto pt-8">
-      <MessageCard
+      <ChatMessageCard
         v-for="(message, index) in messages"
         :key="index"
         :currentUser="currentUser"
@@ -26,19 +23,19 @@
       </h3>
     </div>
     <div>
-      <SendMessageInput :userList="userList" :currentUser="currentUser" />
+      <ChatMessageSender :userList="userList" :currentUser="currentUser" />
     </div>
   </div>
 </template>
 <script>
-import MessageCard from "@/components/MessageCard";
-import SendMessageInput from "@/components/SendMessageInput.vue";
+import ChatMessageCard from "@/components/ChatMessageCard";
+import ChatMessageSender from "@/components/ChatMessageSender.vue";
 import { mapGetters } from "vuex";
 export default {
   name: "ChatRoom",
   components: {
-    MessageCard,
-    SendMessageInput,
+    ChatMessageCard,
+    ChatMessageSender,
   },
   computed: {
     ...mapGetters({

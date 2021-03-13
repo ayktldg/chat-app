@@ -1,6 +1,8 @@
 <template>
-  <div class="list md:w-2/6 overflow-y-auto bg-gray-700 py-4 text-gray-300">
-  <h2 class="pl-7 text-xl font-bold pb-4 border-b-2 border-gray-400">Users</h2>
+  <div class="w-2/6 overflow-y-auto bg-gray-700 py-4 text-gray-300 px-0">
+    <h2 class="pl-3 md:pl-5 text-xl font-bold pb-4 border-b-2 border-gray-400">
+      Users
+    </h2>
     <UserListPersonCard
       v-for="user in userList"
       :key="user.id"
@@ -30,5 +32,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
