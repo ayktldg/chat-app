@@ -1,6 +1,6 @@
 <template>
   <div
-    class="home bg-gradient-to-r from-gray-200 via-gray-500 to-gray-600 py-8"
+    class="h-screen bg-gradient-to-r from-gray-200 via-gray-500 to-gray-600 py-8"
   >
     <div class="container mx-auto md:flex">
       <div

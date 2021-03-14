@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-gradient-to-r from-gray-200 via-gray-500 to-gray-600 pt-20 pb-16 md:pb-12 md:pt-16"
+    class=" h-screen bg-gradient-to-r from-gray-200 via-gray-500 to-gray-600 pt-20 pb-16 md:pb-12 md:pt-16"
   >
     <div class="container mx-auto w-3/4 md:w-1/2">
       <h2 class="font-bold text-3xl md:text-4xl">
