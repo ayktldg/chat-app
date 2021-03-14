@@ -36,7 +36,7 @@
               class="inline-block rounded-2xl w-full py-1 px-3 mt-2 focus:outline-none focus:shadow-lg"
               v-model="user.password"
             />
-            <span class="text-center font-bold text-base text-red-800 italic">{{ errors[0] }}</span>
+            <span class="text-center font-bold text-base text-red-800 italic">{{ loginErrorMessage ? loginErrorMessage : errors[0] }}</span>
           </ValidationProvider>
         </div>
 
@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -66,6 +67,9 @@ export default {
         password: "",
       },
     };
+  },
+  computed:{
+    ...mapGetters({loginErrorMessage: "getLoginErrorMessage"})
   },
   methods: {
     login() {

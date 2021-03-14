@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-4/6 bg-gradient-to-r from-gray-500 via-gray-600 to-gray-800 flex flex-col justify-between"
+    class="w-4/6 h-full bg-gradient-to-r from-gray-500 via-gray-600 to-gray-800 flex flex-col justify-between"
   >
     <div
       class="flex border-b-2 text-gray-200 border-gray-400 justify-between items-center"

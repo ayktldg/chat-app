@@ -21,3 +21,10 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+.firebaserc
+firebase.json
+firestore.indexes.json
+firestore.rules
+.firebase/hosting.ZGlzdA.cache
+.github/workflows/firebase-hosting-merge.yml
+.github/workflows/firebase-hosting-pull-request.yml

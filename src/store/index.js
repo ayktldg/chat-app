@@ -18,6 +18,7 @@ export default new Vuex.Store({
     currentUser: {},
     otherUser: {},
     users: [],
+    loginErrorMessage: "",
     chatRoom: {},
     messages: [],
   },
@@ -30,6 +31,9 @@ export default new Vuex.Store({
     },
     SET_USERS(state, payload) {
       state.users = payload;
+    },
+    LOGIN_ERROR_MESSAGE(state,payload){
+      state.loginErrorMessage = payload;
     },
     SET_CHATROOM(state, payload) {
       state.chatRoom = payload;
@@ -66,13 +70,17 @@ export default new Vuex.Store({
         });
     },
 
-    LOGIN(context, payload) {
+    LOGIN({ commit }, payload) {
       firebase
         .auth()
         .signInWithEmailAndPassword(payload.email, payload.password)
-        .then(() => router.push("/stream"))
+        .then(() => {
+          commit("LOGIN_ERROR_MESSAGE", "");
+          router.push("/stream");
+        })
         .catch((error) => {
-          var errorMessage = error.message;
+          let errorMessage = error.message;
+          commit("LOGIN_ERROR_MESSAGE", errorMessage);
           console.log(errorMessage);
         });
     },
@@ -209,6 +217,7 @@ export default new Vuex.Store({
     getCurrentUser: (state) => state.currentUser,
     getOtherUser: (state) => state.otherUser,
     getUsers: (state) => state.users,
+    getLoginErrorMessage: (state) => state.loginErrorMessage,
     getChatInfo: (state) => state.chatRoom,
     getMessages: (state) => state.messages,
   },
