@@ -6,7 +6,7 @@
 
 ## Demo
 
-Online deployment of this project is available at [Chat App](https://chat-app-78874.web.app/).
+Online deployment of this project is available at [Chat App](https://chat-app-ayktldg.vercel.app/).
 
 You can use the below credentials to test the app.
 
