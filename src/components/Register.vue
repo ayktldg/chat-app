@@ -1,13 +1,13 @@
 <template>
   <div
-    class=" h-screen bg-gradient-to-r from-gray-200 via-gray-500 to-gray-600 pt-20 pb-16 md:pb-12 md:pt-16"
+    class="register bg-gradient-to-r from-gray-200 via-gray-500 to-gray-600 flex justify-center items-center"
   >
     <div class="container mx-auto w-3/4 md:w-1/2">
       <h2 class="font-bold text-3xl md:text-4xl">
         Register for contact people
       </h2>
       <ValidationObserver v-slot="{ handleSubmit }">
-        <form @submit.prevent="handleSubmit(register)" class="mb-20 md:mb-16">
+        <form @submit.prevent="handleSubmit(register)" class="">
           <div class="name my-5">
             <label for="name" class="block text-lg font-semibold"
               >Username</label
@@ -24,9 +24,10 @@
                 class="inline-block rounded-md w-full p-1 mt-2 border"
                 v-model="user.name"
               />
-              <span class="text-center font-bold text-base text-red-800 italic">{{
-                errors[0]
-              }}</span>
+              <span
+                class="text-center font-bold text-base text-red-800 italic"
+                >{{ errors[0] }}</span
+              >
             </ValidationProvider>
           </div>
           <div class="email my-5">
@@ -43,9 +44,10 @@
                 class="inline-block rounded-md w-full p-1 mt-2 border"
                 v-model="user.email"
               />
-              <span class="text-center font-bold text-base text-red-800 italic">{{
-                errors[0]
-              }}</span>
+              <span
+                class="text-center font-bold text-base text-red-800 italic"
+                >{{ errors[0] }}</span
+              >
             </ValidationProvider>
           </div>
           <div class="password my-5">
@@ -64,9 +66,10 @@
                 class="inline-block rounded-md w-full p-1 mt-2 border"
                 v-model="user.password"
               />
-              <span class="text-center font-bold text-base text-red-800 italic">{{
-                errors[0]
-              }}</span>
+              <span
+                class="text-center font-bold text-base text-red-800 italic"
+                >{{ errors[0] }}</span
+              >
             </ValidationProvider>
           </div>
           <button
@@ -99,3 +102,8 @@ export default {
   },
 };
 </script>
+<style>
+.register {
+  height: calc(100vh - 204px);
+}
+</style>

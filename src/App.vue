@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="h-screen">
+  <div id="app">
     <TheNavbar />
     <router-view />
     <TheFooter />
@@ -19,6 +19,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>
