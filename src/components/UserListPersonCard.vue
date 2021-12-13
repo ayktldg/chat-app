@@ -52,6 +52,7 @@ export default {
   methods: {
     setChat() {
       this.$store.dispatch("CREATE_CHATROOM", this.user);
+      this.openChat();
     },
     openChat() {
       this.$store.dispatch("OPEN_CHAT", this.user);
