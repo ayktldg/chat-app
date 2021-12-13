@@ -1,15 +1,16 @@
 <template>
   <div
-    class="w-4/6 h-full bg-gradient-to-r from-gray-500 via-gray-600 to-gray-800 flex flex-col justify-between"
+    class="w-4/6 bg-gradient-to-r from-gray-500 via-gray-600 to-gray-800 flex flex-col"
   >
-    <div
-      class="flex border-b-2 text-gray-200 border-gray-400 justify-between items-center"
-    >
+    <div class="border-b-2 text-gray-200 border-gray-400 flex-none">
       <h2 class="pl-4 text-xl font-bold py-4">
         {{ otherUser.name }}
       </h2>
     </div>
-    <div v-if="messages.length > 0" class="flex flex-col overflow-y-auto pt-8">
+    <div
+      v-if="messages.length > 0"
+      class="flex flex-col pt-8 overflow-y-auto flex-1"
+    >
       <ChatMessageCard
         v-for="(message, index) in messages"
         :key="index"
@@ -17,12 +18,12 @@
         :message="message"
       />
     </div>
-    <div v-else>
-      <h3 class="text-center text-lg font-semibold text-gray-200">
+    <div v-else class="flex-1 flex items-center justify-center">
+      <h3 class="text-lg font-semibold text-gray-200">
         There is no message yet
       </h3>
     </div>
-    <div>
+    <div class="flex-none">
       <ChatMessageSender :userList="userList" :currentUser="currentUser" />
     </div>
   </div>
